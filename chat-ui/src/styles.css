@@ -1,0 +1,9 @@
+#your-assistant-chat-root {
+  display: flex;
+  flex-direction: column;
+}
+
+#your-assistant-chat-root .agenttic {
+  height: 100%;
+  flex: 1;
+}
