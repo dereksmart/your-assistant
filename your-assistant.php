@@ -29,3 +29,7 @@ function your_assistant_activate() {
 function your_assistant_deactivate() {
 	remove_role( 'ai_assistant' );
 }
+
+add_action( 'admin_notices', function () {
+	echo '<div class="notice notice-info"><p>Hello Dolly!</p></div>';
+} );
