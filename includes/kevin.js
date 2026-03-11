@@ -281,45 +281,26 @@
 		}
 	}
 
-	function drawOverlay( title, line1, line2 ) {
-		// Dark overlay
-		ctx.fillStyle = 'rgba(0,0,0,0.65)';
-		ctx.fillRect( 0, 0, W, H );
-
-		ctx.textAlign = 'center';
-		ctx.textBaseline = 'middle';
-
-		// Title
-		ctx.fillStyle = '#ffffff';
-		ctx.font = 'bold 32px sans-serif';
-		ctx.fillText( title, W / 2, H / 2 - 50 );
-
-		// Subtitle line 1
-		ctx.fillStyle = '#eeeeee';
-		ctx.font = 'italic 17px sans-serif';
-		ctx.fillText( line1, W / 2, H / 2 );
-
-		// Subtitle line 2 (score)
-		ctx.fillStyle = '#aaaaaa';
-		ctx.font = '14px monospace';
-		ctx.fillText( line2, W / 2, H / 2 + 40 );
-
-		ctx.textAlign = 'left';
-		ctx.textBaseline = 'alphabetic';
-	}
-
 	function endGame() {
 		cancelAnimationFrame( animId );
-		// Draw the final game frame first, then overlay on top
 		draw();
-		const survived = 'survived ' + Math.floor( score / 60 ) + ' seconds';
+
+		const survived = 'Survived ' + Math.floor( score / 60 ) + ' seconds.';
+		let title, sub;
 		if ( state === 'grabbed' ) {
-			drawOverlay( '😿 Grabbed!', "She didn't trust what I was doing.", survived );
+			title = '😿 Grabbed!';
+			sub   = "She didn't trust what I was doing.";
 		} else if ( state === 'fallen' ) {
-			drawOverlay( '🌿 Fell!', 'Landed unscathed but shaken.', survived );
+			title = '🌿 Fell!';
+			sub   = 'Landed unscathed but shaken.';
 		} else if ( state === 'won' ) {
-			drawOverlay( '🎉 You made it!', 'Derek dismantled the fence. Good cat.', survived );
+			title = '🎉 You made it!';
+			sub   = 'Derek dismantled the fence. Good cat.';
 		}
+
+		const msg = document.getElementById( 'kb-message' );
+		msg.innerHTML = '<strong>' + title + '</strong> <em>' + sub + '</em> ' + survived;
+		msg.style.display = 'block';
 		document.getElementById( 'kb-restart' ).style.display = 'inline-block';
 	}
 
