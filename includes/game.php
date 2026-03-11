@@ -2,6 +2,31 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
+ * Shortcode: [kevins_balcony]
+ */
+add_shortcode( 'kevins_balcony', function() {
+	wp_enqueue_script(
+		'kevins-balcony',
+		YOUR_ASSISTANT_URL . 'includes/kevin.js',
+		array(),
+		YOUR_ASSISTANT_VERSION,
+		true
+	);
+	ob_start();
+	?>
+	<div style="max-width:580px;margin:2em auto;text-align:center;">
+		<canvas id="kevins-balcony-canvas" width="560" height="400"
+			style="border:2px solid #c3c4c7;border-radius:6px;background:#87CEEB;display:block;margin:0 auto;max-width:100%;"></canvas>
+		<p style="margin-top:8px;color:#777;font-size:0.85em;">
+			← → arrow keys to move &nbsp;|&nbsp; tap left/right on mobile
+		</p>
+		<button id="kb-restart" class="wp-element-button" style="display:none;margin-top:4px;">Play Again</button>
+	</div>
+	<?php
+	return ob_get_clean();
+} );
+
+/**
  * Register Kevin's Balcony as a hidden admin page.
  */
 add_action( 'admin_menu', function() {
