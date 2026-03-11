@@ -18,6 +18,7 @@ require_once YOUR_ASSISTANT_PATH . 'includes/role.php';
 require_once YOUR_ASSISTANT_PATH . 'includes/admin.php';
 require_once YOUR_ASSISTANT_PATH . 'includes/ajax.php';
 require_once YOUR_ASSISTANT_PATH . 'includes/activity.php';
+require_once YOUR_ASSISTANT_PATH . 'includes/game.php';
 
 register_activation_hook( __FILE__, 'your_assistant_activate' );
 register_deactivation_hook( __FILE__, 'your_assistant_deactivate' );
