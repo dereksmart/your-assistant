@@ -20,6 +20,7 @@ add_shortcode( 'kevins_balcony', function() {
 		<p style="margin-top:8px;color:#777;font-size:0.85em;">
 			← → arrow keys to move &nbsp;|&nbsp; tap left/right on mobile
 		</p>
+		<p id="kb-message" style="display:none;margin:8px 0 4px;font-size:1em;"></p>
 		<button id="kb-restart" class="wp-element-button" style="display:none;margin-top:4px;">Play Again</button>
 	</div>
 	<?php
@@ -60,6 +61,7 @@ function your_assistant_kevins_balcony_page() {
 		<p style="margin-top:12px;color:#555;font-size:0.9em;">
 			← → arrow keys to move &nbsp;|&nbsp; tap left/right on mobile
 		</p>
+		<p id="kb-message" style="display:none;margin:8px 0 4px;font-size:1em;"></p>
 		<button id="kb-restart" class="button button-primary" style="margin-top:8px;display:none;">Play Again</button>
 	</div>
 	<?php
