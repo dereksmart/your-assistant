@@ -21,28 +21,10 @@ add_action( 'admin_notices', function() {
 			<strong><?php esc_html_e( 'Want a hand from Dolly?', 'your-assistant' ); ?></strong>
 			<p style="margin:2px 0 0;"><?php esc_html_e( 'Create an AI assistant who knows your site and can help you manage it.', 'your-assistant' ); ?></p>
 		</div>
-		<button class="button button-primary" id="ya-confetti-btn" onclick="yaFireConfetti()">
-			<?php esc_html_e( '🎉 Yes please!', 'your-assistant' ); ?>
-		</button>
+		<a href="<?php echo esc_url( admin_url( 'admin.php?page=your-assistant-setup' ) ); ?>" class="button button-primary">
+			<?php esc_html_e( 'Create Your Assistant', 'your-assistant' ); ?>
+		</a>
 	</div>
-	<script>
-	function yaFireConfetti() {
-		var defaults = { spread: 360, ticks: 100, gravity: 0.5, decay: 0.94, startVelocity: 30 };
-		function fire(particleRatio, opts) {
-			confetti(Object.assign({}, defaults, opts, { particleCount: Math.floor(200 * particleRatio) }));
-		}
-		fire(0.25, { spread: 26, startVelocity: 55 });
-		fire(0.2,  { spread: 60 });
-		fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-		fire(0.1,  { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-		fire(0.1,  { spread: 120, startVelocity: 45 });
-	}
-	(function() {
-		var s = document.createElement('script');
-		s.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js';
-		document.head.appendChild(s);
-	}());
-	</script>
 	<?php
 } );
 
