@@ -18,7 +18,7 @@ add_action( 'admin_notices', function() {
 	<div class="notice notice-info" style="display:flex;align-items:center;gap:12px;padding:12px 16px;">
 		<span class="dashicons dashicons-superhero" style="font-size:24px;color:#2271b1;"></span>
 		<div style="flex:1;">
-			<strong><?php esc_html_e( 'Want a hand around here?', 'your-assistant' ); ?></strong>
+			<strong><?php esc_html_e( 'Want a hand from Dolly?', 'your-assistant' ); ?></strong>
 			<p style="margin:2px 0 0;"><?php esc_html_e( 'Create an AI assistant who knows your site and can help you manage it.', 'your-assistant' ); ?></p>
 		</div>
 		<a href="<?php echo esc_url( admin_url( 'admin.php?page=your-assistant-setup' ) ); ?>" class="button button-primary">
