@@ -54,15 +54,14 @@
 	document.getElementById( 'kb-restart' ).addEventListener( 'click', init );
 
 	function spawnHand() {
-		const side = Math.random() < 0.5 ? 'left' : 'right';
-		const targetX = cat.x + ( Math.random() * 80 - 40 );
+		// Hands drop from the top, aimed at Kevin's current position
+		const speed = 2 + Math.floor( diffTimer / 300 ) * 0.4;
 		hands.push( {
-			x:      side === 'left' ? -HAND_W : W + HAND_W,
-			y:      LEDGE_Y - HAND_H - 10,
-			targetX,
-			speed:  2 + score * 0.015,
-			side,
-			grabbed: false,
+			x:     cat.x + ( Math.random() * 100 - 50 ), // aim near Kevin with some offset
+			y:     -HAND_H,                              // start above canvas
+			speedY: speed,
+			phase: 'dropping',  // dropping | hovering | retreating
+			hoverTimer: 0,
 		} );
 	}
 
@@ -113,24 +112,41 @@
 		// Update hands
 		for ( let i = hands.length - 1; i >= 0; i-- ) {
 			const h = hands[ i ];
-			const dx = h.targetX - h.x;
-			h.x += Math.sign( dx ) * h.speed;
 
-			// Check grab
+			if ( h.phase === 'dropping' ) {
+				h.y += h.speedY;
+				// Stop just above the ledge
+				if ( h.y >= LEDGE_Y - HAND_H - 5 ) {
+					h.y = LEDGE_Y - HAND_H - 5;
+					h.phase = 'hovering';
+					h.hoverTimer = 60 + Math.random() * 60; // hover for ~1-2s
+				}
+			} else if ( h.phase === 'hovering' ) {
+				// Slowly track Kevin horizontally while hovering
+				const dx = ( cat.x + CAT_W / 2 ) - ( h.x + HAND_W / 2 );
+				h.x += Math.sign( dx ) * Math.min( Math.abs( dx ), 1.5 );
+				h.hoverTimer--;
+				if ( h.hoverTimer <= 0 ) {
+					h.phase = 'retreating';
+				}
+			} else if ( h.phase === 'retreating' ) {
+				h.y -= h.speedY * 1.5;
+				if ( h.y < -HAND_H ) {
+					hands.splice( i, 1 );
+					continue;
+				}
+			}
+
+			// Check grab — only while hovering
 			if (
+				h.phase === 'hovering' &&
 				!cat.falling &&
-				Math.abs( h.x - cat.x ) < CAT_W * 0.8 &&
-				Math.abs( h.y - cat.y ) < CAT_H
+				Math.abs( ( h.x + HAND_W / 2 ) - ( cat.x + CAT_W / 2 ) ) < CAT_W * 0.8 &&
+				h.y + HAND_H >= cat.y
 			) {
 				state = 'grabbed';
 				endGame();
 				return;
-			}
-
-			// Remove hand once it passes through
-			if ( ( h.side === 'left' && h.x > W + HAND_W ) ||
-			     ( h.side === 'right' && h.x < -HAND_W ) ) {
-				hands.splice( i, 1 );
 			}
 		}
 
