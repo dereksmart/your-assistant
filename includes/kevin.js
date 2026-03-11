@@ -30,6 +30,9 @@
 		handTimer  = 90;
 		diffTimer  = 0;
 		document.getElementById( 'kb-restart' ).style.display = 'none';
+		const msg = document.getElementById( 'kb-message' );
+		msg.style.display = 'none';
+		msg.innerHTML = '';
 		keys = {};
 		cancelAnimationFrame( animId );
 		loop();
