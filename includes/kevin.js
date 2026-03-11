@@ -281,31 +281,44 @@
 		}
 	}
 
-	function drawOverlay( title, sub ) {
-		ctx.fillStyle = 'rgba(0,0,0,0.55)';
+	function drawOverlay( title, line1, line2 ) {
+		// Dark overlay
+		ctx.fillStyle = 'rgba(0,0,0,0.65)';
 		ctx.fillRect( 0, 0, W, H );
-		ctx.fillStyle = '#fff';
-		ctx.font = 'bold 28px sans-serif';
+
 		ctx.textAlign = 'center';
-		ctx.fillText( title, W / 2, H / 2 - 20 );
-		ctx.font = '16px sans-serif';
-		ctx.fillStyle = '#ddd';
-		ctx.fillText( sub, W / 2, H / 2 + 16 );
-		ctx.fillStyle = '#aaa';
-		ctx.font = '13px monospace';
-		ctx.fillText( 'survived ' + Math.floor( score / 60 ) + ' seconds', W / 2, H / 2 + 44 );
+		ctx.textBaseline = 'middle';
+
+		// Title
+		ctx.fillStyle = '#ffffff';
+		ctx.font = 'bold 32px sans-serif';
+		ctx.fillText( title, W / 2, H / 2 - 50 );
+
+		// Subtitle line 1
+		ctx.fillStyle = '#eeeeee';
+		ctx.font = 'italic 17px sans-serif';
+		ctx.fillText( line1, W / 2, H / 2 );
+
+		// Subtitle line 2 (score)
+		ctx.fillStyle = '#aaaaaa';
+		ctx.font = '14px monospace';
+		ctx.fillText( line2, W / 2, H / 2 + 40 );
+
 		ctx.textAlign = 'left';
+		ctx.textBaseline = 'alphabetic';
 	}
 
 	function endGame() {
 		cancelAnimationFrame( animId );
+		// Draw the final game frame first, then overlay on top
 		draw();
+		const survived = 'survived ' + Math.floor( score / 60 ) + ' seconds';
 		if ( state === 'grabbed' ) {
-			drawOverlay( '😿 Grabbed!', "She didn't trust what I was doing." );
+			drawOverlay( '😿 Grabbed!', "She didn't trust what I was doing.", survived );
 		} else if ( state === 'fallen' ) {
-			drawOverlay( '🌿 Fell!', 'Landed unscathed but shaken.' );
+			drawOverlay( '🌿 Fell!', 'Landed unscathed but shaken.', survived );
 		} else if ( state === 'won' ) {
-			drawOverlay( '🎉 You made it!', 'Derek dismantled the fence. Good cat.' );
+			drawOverlay( '🎉 You made it!', 'Derek dismantled the fence. Good cat.', survived );
 		}
 		document.getElementById( 'kb-restart' ).style.display = 'inline-block';
 	}
